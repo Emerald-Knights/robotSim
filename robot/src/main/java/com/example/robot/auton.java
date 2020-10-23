@@ -30,6 +30,7 @@ public class auton extends LinearOpMode {
             }
 
 
+
             double lf = lx + ly + rx;
             double lb = ly - lx + rx;
             double rf = ly - lx - rx;
