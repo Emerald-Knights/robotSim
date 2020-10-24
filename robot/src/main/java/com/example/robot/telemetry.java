@@ -17,22 +17,26 @@ public class telemetry {
 
     //add stuff to list
     public static void addData(String add){
-        if(add!=null){
+        if(!RobotSimulator.pause){
             info.add(add);
 
         }
+
     }
 
     //robot sim has its own list that is drawn, so we clear it and replace it with current telemetry list
     public static void update(){
-        RobotSimulator.tele.clear();
-        for(String component: info){
-            if(info!=null){
-                RobotSimulator.tele.add(component);
+        if(!RobotSimulator.pause){
+            RobotSimulator.tele.clear();
+            for(String component: info){
+                if(info!=null){
+                    RobotSimulator.tele.add(component);
 
+                }
             }
+            info.clear();
         }
-        info.clear();
+
         
     }
 }

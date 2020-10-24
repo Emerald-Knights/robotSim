@@ -5,17 +5,8 @@
  */
 package com.example.robot;
 
-//import com.badlogic.gdx.controllers.ControllerManager;
-
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
-
-//import org.libsdl.SDL_Error;
-
-//import uk.co.electronstudio.sdl2gdx.SDL2ControllerManager;
-
-//import com.studiohartman.jamepad.ControllerState;
-
 
 /**
  *
@@ -35,7 +26,6 @@ public class paint implements Runnable{
         while(keepRun){
             //calls for image to be redrawn
             RobotSimulator.pic.repaint();
-
             //get current state of controller
             state= controller.getState(0);
 
@@ -62,9 +52,14 @@ public class paint implements Runnable{
             gamepad1.left_trigger=state.leftTrigger;
             gamepad1.right_trigger=state.rightTrigger;
 
+            //RobotSimulator.stop.setBounds(RobotSimulator.pic.getWidth()-140, 20, 50, 30);
+            if(RobotSimulator.pause){
+                ElapsedTime.startMoment+=10;
+            }
+
             //wait 50 milliseconds before repeating
             try{
-                Thread.sleep(50);
+                Thread.sleep(10);
             }
             catch(Exception e){}
 

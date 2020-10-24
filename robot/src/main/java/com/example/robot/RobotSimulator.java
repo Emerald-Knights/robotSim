@@ -36,6 +36,8 @@ public class RobotSimulator extends Canvas {
     static Canvas pic; //canvas to draw on
     static Image bot; //global image of robot
     static Image field;
+    static Image pauseSim;
+    static boolean pause= false;
 
     //48 pixesl per inch, field is 12x12ft
     static final int length=576; //size of frame 576
@@ -43,14 +45,28 @@ public class RobotSimulator extends Canvas {
     
     static List<String> tele=new ArrayList<>(); //list that includes all the string that telemetry wants to display
     static JButton reset;
+    static JButton stop;
+
     public static void main(String[] args) {
         pic= new RobotSimulator(); //making the canvas
         frame= new JFrame("pog"); //making the frame
+
         reset = new JButton("R"); //new button made to reset robot position
+        stop= new JButton("P");
+
         paint t= new paint(); //making a new paint object, which will be made into a thread
         Thread draw= new Thread(t); //making t into a thread
 
-        reset.setBounds(length-60, 20, 50, 30); //size and position of button
+
+        stop.setBounds(70, 10, 50, 30);
+        stop.addActionListener( new ActionListener (){
+            public void actionPerformed(ActionEvent e){
+                pause=!pause;
+            }
+        });
+        frame.add(stop);
+
+        reset.setBounds(10, 10, 50, 30); //size and position of button
         reset.addActionListener(new ActionListener (){
             public void actionPerformed (ActionEvent e) { //when button pressed reset robert position
                 robert.position.x=0;
@@ -60,10 +76,10 @@ public class RobotSimulator extends Canvas {
         });
         frame.add(reset); //add button to frame
 
-
         try{
             bot=ImageIO.read(new File("robot\\src\\main\\java\\com\\example\\robot\\robotH.png")); //robot picture file path
             field=ImageIO.read(new File("robot\\src\\main\\java\\com\\example\\robot\\field.png")); //field picture file
+            pauseSim=ImageIO.read(new File("robot\\src\\main\\java\\com\\example\\robot\\pause.png"));
         }
         catch(IOException e){}
         
@@ -76,13 +92,12 @@ public class RobotSimulator extends Canvas {
         frame.setBackground(new Color(142, 210, 153)); //make the background color olivia used on the logbook epic idea so its not "ugly"
         frame.add(pic); //make the frame have the canvas
 
-
         frame.pack();
-
 
         frame.setVisible(true); //make it visible
         
         draw.start(); //start the painting thread
+        ElapsedTime.startMoment=System.currentTimeMillis();
 
         //run whatever is in the auton runOpMode
         auton lol= new auton();
@@ -101,27 +116,33 @@ public class RobotSimulator extends Canvas {
         Image buffer= frame.createImage(frame.getWidth(), frame.getHeight());
         Graphics2D bufferG=(Graphics2D) buffer.getGraphics();
 
-        reset.setBounds(frame.getWidth()-80, 20, 50, 30);
+        //frame.setBackground(new Color(142, 210, 153));
+
+        //reset.setBounds(pic.getWidth()-80, 20, 50, 30);
 
 
         //bufferG.drawImage(field, frame.getWidth()/2-length/2, frame.getHeight()/2-width/2, length, width, this);
         bufferG.drawImage(field, getWidth()/2-length/2, getHeight()/2-height/2, length, height, this);
 
         //draw everything in the telemetry
-
         List<String> telem= new ArrayList<>();
         telem.addAll(tele);
 
         for(int i=0; i<telem.size(); i++){
             String message=telem.get(i);
             if(message!=null){
-                bufferG.drawString(message, 0, i*10+10);
+                bufferG.drawString(message, 0, getHeight()-telem.size()*10+(i*10+10));
             }
         }
 
         //rotate based on robot rotation and draw it
         bufferG.rotate(-robert.position.heading, robert.position.x +getWidth()/2, robert.position.y +getHeight()/2);
         bufferG.drawImage(bot, (int)robert.position.x-robotLen/2+getWidth()/2,(int)robert.position.y-robotWid/2+getHeight()/2, robotLen, robotWid,this);
+
+        bufferG.rotate(robert.position.heading, robert.position.x +getWidth()/2, robert.position.y +getHeight()/2);
+        if(pause){
+            bufferG.drawImage(pauseSim, getWidth()/2-75, getHeight()/2-75, 150, 150, this);
+        }
 
         //replace current image with image we were preparing in the background
         g.drawImage(buffer, 0, 0, this);
