@@ -37,7 +37,7 @@ public class RobotSimulator extends Canvas {
     static Image bot; //global image of robot
     static Image field;
     static Image pauseSim;
-    static boolean pause= false;
+    static boolean pause= true;
 
     //48 pixesl per inch, field is 12x12ft
     static final int length=576; //size of frame 576
@@ -77,11 +77,13 @@ public class RobotSimulator extends Canvas {
         frame.add(reset); //add button to frame
 
         try{
-            bot=ImageIO.read(new File("robot\\src\\main\\java\\com\\example\\robot\\robotH.png")); //robot picture file path
-            field=ImageIO.read(new File("robot\\src\\main\\java\\com\\example\\robot\\field.png")); //field picture file
-            pauseSim=ImageIO.read(new File("robot\\src\\main\\java\\com\\example\\robot\\pause.png"));
+            bot=ImageIO.read(new File("robot/src/main/java/com/example/robot/robotH.png")); //robot picture file path
+            field=ImageIO.read(new File("robot/src/main/java/com/example/robot/field.png")); //thx ally for making the field image
+            pauseSim=ImageIO.read(new File("robot/src/main/java/com/example/robot/pause.png")); //THERE OLIVIA DOES THAT MAKE U HAPPY
         }
-        catch(IOException e){}
+        catch(IOException e){
+            System.out.println("oof");
+        }
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -141,7 +143,7 @@ public class RobotSimulator extends Canvas {
 
         bufferG.rotate(robert.position.heading, robert.position.x +getWidth()/2, robert.position.y +getHeight()/2);
         if(pause){
-            bufferG.drawImage(pauseSim, getWidth()/2-75, getHeight()/2-75, 150, 150, this);
+            bufferG.drawImage(pauseSim, getWidth()-75, 10, 50, 50, this);
         }
 
         //replace current image with image we were preparing in the background
