@@ -49,8 +49,8 @@ public class mouseInputs extends MouseAdapter{
             y = y2 + RobotSimulator.robert.position.getY();
 
 
-            if(x>=RobotSimulator.robert.position.getX()-RobotSimulator.length/6 && x<=RobotSimulator.robert.position.getX()+RobotSimulator.length/6 &&
-                y>=RobotSimulator.robert.position.getY()-RobotSimulator.height/6 && y<=RobotSimulator.robert.position.getY()+RobotSimulator.height/6){
+            if(x>=RobotSimulator.robert.position.getX()-RobotSimulator.length/12 && x<=RobotSimulator.robert.position.getX()+RobotSimulator.length/12 &&
+                y>=RobotSimulator.robert.position.getY()-RobotSimulator.height/12 && y<=RobotSimulator.robert.position.getY()+RobotSimulator.height/12){
                 holding=true;
 
             }
@@ -78,8 +78,8 @@ public class mouseInputs extends MouseAdapter{
             y = y2 + RobotSimulator.robert.position.getY();
 
 
-            if(x>=RobotSimulator.robert.position.getX()-RobotSimulator.length/6 && x<=RobotSimulator.robert.position.getX()+RobotSimulator.length/6 &&
-                    y>=RobotSimulator.robert.position.getY()-RobotSimulator.height/6 && y<=RobotSimulator.robert.position.getY()+RobotSimulator.height/6){
+            if(x>=RobotSimulator.robert.position.getX()-RobotSimulator.length/12 && x<=RobotSimulator.robert.position.getX()+RobotSimulator.length/12 &&
+                    y>=RobotSimulator.robert.position.getY()-RobotSimulator.height/12 && y<=RobotSimulator.robert.position.getY()+RobotSimulator.height/12){
                 spinning=true;
 
             }
