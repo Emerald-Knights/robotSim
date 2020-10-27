@@ -7,6 +7,7 @@ package com.example.robot;
 
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
+import com.sun.glass.events.KeyEvent;
 
 /**
  *
@@ -51,6 +52,15 @@ public class paint implements Runnable{
             gamepad1.right_bumper=state.rb;
             gamepad1.left_trigger=state.leftTrigger;
             gamepad1.right_trigger=state.rightTrigger;
+
+            //keyboard
+            keyboard1.w=RobotSimulator.keys.keys[KeyEvent.VK_W];
+            keyboard1.a=RobotSimulator.keys.keys[KeyEvent.VK_A];
+            keyboard1.s=RobotSimulator.keys.keys[KeyEvent.VK_S];
+            keyboard1.d=RobotSimulator.keys.keys[KeyEvent.VK_D];
+            keyboard1.q=RobotSimulator.keys.keys[KeyEvent.VK_Q];
+            keyboard1.e=RobotSimulator.keys.keys[KeyEvent.VK_E];
+
 
             //RobotSimulator.stop.setBounds(RobotSimulator.pic.getWidth()-140, 20, 50, 30);
             if(RobotSimulator.pause){

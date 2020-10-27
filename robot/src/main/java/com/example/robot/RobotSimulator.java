@@ -47,16 +47,25 @@ public class RobotSimulator extends Canvas {
     static JButton reset;
     static JButton stop;
 
+    static inputs keys;
+    static mouseInputs rice;
     public static void main(String[] args) {
         pic= new RobotSimulator(); //making the canvas
-        frame= new JFrame("pog"); //making the frame
+        frame= new JFrame("EK 10582"); //making the frame
 
         reset = new JButton("R"); //new button made to reset robot position
         stop= new JButton("P");
+        reset.setFocusable(false);
+        stop.setFocusable(false);
 
         paint t= new paint(); //making a new paint object, which will be made into a thread
         Thread draw= new Thread(t); //making t into a thread
 
+        keys=new inputs();
+        rice=new mouseInputs();
+        pic.addKeyListener(keys);
+        pic.addMouseListener(rice);
+        pic.addMouseMotionListener(rice);
 
         stop.setBounds(70, 10, 50, 30);
         stop.addActionListener( new ActionListener (){
