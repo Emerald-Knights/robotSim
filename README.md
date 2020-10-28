@@ -19,7 +19,7 @@ The simulator only supports mecanum drives and a single LinearOpMode as of right
 **How it works**
 The simulator first needs to find the movement of the robot relative to itself, so it reads the power that every motor is being set to. Using this, it forms a vector where the left back and right front motors form the y part and the left front and right back motors form the x part. The magnitude can be determined with pythagoreans, while the angle is the arctangent of y/x.
 
-![triangle](\pics\triangle.png)
+![triangle](/pics\/triangle.png)
 
 However, this vector needs to be rotated 45 degrees to the left to accurately show the direction that the robot is moving. After a simple rotation of 45 degrees, the direction that the robot is moving relative to itsef can be calculated. However, in order to find the robot's movements relative to the field instead of just itself, the robot's global heading is added to the angle that the robot is moving relative to itself. The robot's movements relative to the global coordinate system found, so now the robot's x and y is changed accordingly with the sine and cosine of its movement. Finally, heading is adjusted based off the difference in the robot's left and right side motors.
 
