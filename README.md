@@ -1,1 +1,3 @@
-code for a kinda shitty robot simulator
+A very simple mecanum drive simulator for FTC teams
+
+To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. Within the robot folder, find the RobotSimulator class. This is where the main method is located. To run the program, press the green arrow located next to the main method. If this does not appear, a run configuration can be made manually. The other class of importance is the auton class, where all of your auton/ teleop code will go. Right now, the simulator only supports LinearOpModes, and only one can be run at a time.
