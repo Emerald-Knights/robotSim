@@ -1,4 +1,4 @@
-package com.example.robot;
+package robot;
 
 
 import java.awt.event.MouseEvent;

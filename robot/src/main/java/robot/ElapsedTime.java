@@ -1,4 +1,4 @@
-package com.example.robot;
+package robot;
 
 public class ElapsedTime {
     private double startTime;

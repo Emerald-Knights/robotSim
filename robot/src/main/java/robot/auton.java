@@ -1,8 +1,8 @@
-package com.example.robot;
+package robot;
 
 import java.awt.event.KeyEvent;
 
-import static com.example.robot.utilities.getPowers;
+import static robot.utilities.getPowers;
 
 
 public class auton extends LinearOpMode {

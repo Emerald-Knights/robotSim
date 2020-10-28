@@ -1,4 +1,4 @@
-package com.example.robot;
+package robot;
 
 public class Point {
     double x, y;

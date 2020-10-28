@@ -1,4 +1,4 @@
-package com.example.robot;
+package robot;
 
 //import com.studiohartman.jamepad.ControllerManager;
 

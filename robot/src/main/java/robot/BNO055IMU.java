@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.robot;
+package robot;
 
-import static com.example.robot.utilities.*;
+import static robot.utilities.*;
 /**
  *
  * @author thomas

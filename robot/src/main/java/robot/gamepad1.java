@@ -1,4 +1,4 @@
-package com.example.robot;
+package robot;
 
 import com.badlogic.gdx.controllers.Controller;
 public class gamepad1 {

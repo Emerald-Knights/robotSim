@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.robot;
+package robot;
 
 import java.util.ArrayList;
 import java.util.List;
-import static com.example.robot.RobotSimulator.frame;
-import static com.example.robot.RobotSimulator.robert;
-import static com.example.robot.utilities.*;
+
+import static robot.utilities.*;
+import static robot.RobotSimulator.robert;
+
 /**
  *
  * @author thomas

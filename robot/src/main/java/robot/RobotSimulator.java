@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.robot;
+package robot;
 
 //import com.studiohartman.jamepad.ControllerManager;
 
@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import static com.example.robot.utilities.*;
-import static com.example.robot.telemetry.*;
+import static robot.utilities.*;
+import static robot.telemetry.*;
 
 /**
  *
@@ -86,9 +86,9 @@ public class RobotSimulator extends Canvas {
         frame.add(reset); //add button to frame
 
         try{
-            bot=ImageIO.read(new File("robot/src/main/java/com/example/robot/robotH.png")); //robot picture file path
-            field=ImageIO.read(new File("robot/src/main/java/com/example/robot/field.png")); //thx ally for making the field image
-            pauseSim=ImageIO.read(new File("robot/src/main/java/com/example/robot/pause.png")); //THERE OLIVIA DOES THAT MAKE U HAPPY
+            bot=ImageIO.read(new File("robot/src/main/java/robot/robotH.png")); //robot picture file path
+            field=ImageIO.read(new File("robot/src/main/java/robot/field.png")); //thx ally for making the field image
+            pauseSim=ImageIO.read(new File("robot/src/main/java/robot/pause.png")); //THERE OLIVIA DOES THAT MAKE U HAPPY
         }
         catch(IOException e){
             System.out.println("oof");
