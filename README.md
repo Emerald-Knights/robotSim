@@ -31,3 +31,6 @@ The simulator first needs to find the movement of the robot relative to itself, 
 
 However, this vector needs to be rotated 45 degrees to the left to accurately show the direction that the robot is moving. After a simple rotation of 45 degrees, the direction that the robot is moving relative to itsef can be calculated. However, in order to find the robot's movements relative to the field instead of just itself, the robot's global heading is added to the angle that the robot is moving relative to itself. The robot's movements relative to the global coordinate system found, so now the robot's x and y is changed accordingly with the sine and cosine of its movement. Finally, heading is adjusted based off the difference in the robot's left and right side motors.
 
+**Bugs and Other Issues**
+---
+Any bugs or issues can be reported via the Issues section of this repository.
