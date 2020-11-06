@@ -18,6 +18,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -49,6 +53,15 @@ public class RobotSimulator extends Canvas {
 
     static inputs keys;
     static mouseInputs rice;
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Autonomous{
+        public String name() default "";
+        public String group() default "";
+    }
+
+
     public static void main(String[] args) {
         pic= new RobotSimulator(); //making the canvas
         frame= new JFrame("EK 10582"); //making the frame
@@ -109,6 +122,9 @@ public class RobotSimulator extends Canvas {
         
         draw.start(); //start the painting thread
         ElapsedTime.startMoment=System.currentTimeMillis();
+
+        auton.class.getAnnotations();
+
 
         //run whatever is in the auton runOpMode
         auton lol= new auton();
