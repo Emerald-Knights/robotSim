@@ -20,6 +20,6 @@ public class BNO055IMU {
         this.angleDiff=angleDiff;
     }
     public Orientation getAngularOrientation(){
-        return new Orientation(angleDiff);
+        return new Orientation(angleWrap(RobotSimulator.robert.position.getHeading()-angleDiff));
     }
 }

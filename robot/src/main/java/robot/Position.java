@@ -37,7 +37,7 @@ public class Position extends Thread{
                 //Cycles through all motors, seeing what mode they are in and thus whether or not to increment encoder position
                 for (int i = 0; i < rob.driveTrain.length; i++) {
                     if (rob.driveTrain[i].getMode().equals(DcMotor.RunMode.RUN_USING_ENCODER) || rob.driveTrain[i].getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)) {
-                        rob.driveTrain[i].position += rob.driveTrain[i].getPower() * 4.456;
+                        rob.driveTrain[i].position += Math.round(rob.driveTrain[i].getPower() *27);
                     } else if (rob.driveTrain[i].getMode().equals(DcMotor.RunMode.STOP_AND_RESET_ENCODER)) {
                         rob.driveTrain[i].setPower(0);
                         rob.driveTrain[i].position = 0;
