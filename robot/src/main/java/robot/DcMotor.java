@@ -11,7 +11,7 @@ package robot;
  */
 public class DcMotor {
     private double power;
-    int position;
+    double position;
     double wantPos;
 
     private RunMode mode=RunMode.RUN_USING_ENCODER;
@@ -49,7 +49,7 @@ public class DcMotor {
     public double getPower(){
         return power;
     }
-    public int getCurrentPosition(){
+    public double getCurrentPosition(){
         return position;
     }
     public boolean isBusy(){

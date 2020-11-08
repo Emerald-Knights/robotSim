@@ -12,5 +12,5 @@ public class auton extends LinearOpMode {
     public void runOpMode(){
 
     }
-    
+
 }
