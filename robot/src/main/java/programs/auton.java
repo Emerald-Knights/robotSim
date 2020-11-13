@@ -1,9 +1,7 @@
 package programs;
 
-import robot.LinearOpMode;
 import robot.LinearOpMode.*;
-import robot.RobotSimulator;
-import robot.robot;
+import robot.*;
 
 /** Use this as a model for all programs you want to write. Copy the imports down. The Autonomous
  *  annotation at the beginning does nothing, but it makes it seem like a real program lol. Also
@@ -16,6 +14,13 @@ public class auton extends LinearOpMode {
     robot robert= RobotSimulator.robert;
     @Override
     public void runOpMode(){
-
+        while(robert.leftBack.getCurrentPosition()<1000 && opModeIsActive()){
+            for(int i=0; i<4; i++){
+                robert.driveTrain[i].setPower(.8);
+            }
+        }
+        for(int i=0; i<4; i++){
+            robert.driveTrain[i].setPower(0);
+        }
     }
 }

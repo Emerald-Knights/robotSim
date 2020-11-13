@@ -47,6 +47,7 @@ public class RobotSimulator extends Canvas {
     static Image pauseSim;
     static boolean pause= true;
 
+    static boolean end=false;
     static Canvas startMenu;
     static JFrame startFrame;
     static boolean start=false;
@@ -62,6 +63,7 @@ public class RobotSimulator extends Canvas {
 
     static JButton reset;
     static JButton stop;
+    static JButton repeat;
 
     static inputs keys;
     static mouseInputs rice;
@@ -117,7 +119,6 @@ public class RobotSimulator extends Canvas {
         while(!start){
 
         }
-        //System.out.println(programs.toArray()[programNum].getClass());
         startFrame.dispose();
 
         frame= new JFrame("EK 10582"); //making the frame
@@ -128,21 +129,12 @@ public class RobotSimulator extends Canvas {
 
         pic= new RobotSimulator(); //making the canvas
 
-
-        //Object[] progra= programs.toArray();
-/*
-        for(Object c: programs){
-            System.out.println(c.toString());
-        }
-
- */
-
-
         reset = new JButton("R"); //new button made to reset robot position
         stop= new JButton("P");
+        repeat= new JButton("F");
         reset.setFocusable(false);
         stop.setFocusable(false);
-
+        repeat.setFocusable(false);
 
         robert=new robot(0,0,Math.PI/2); //new robot at 0, 0, facing 180 degrees from horizontal
         robert.position.start(); //start the position thread
@@ -174,6 +166,15 @@ public class RobotSimulator extends Canvas {
         });
         frame.add(reset); //add button to frame
 
+        repeat.setBounds(130, 10, 50, 30);
+        repeat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end=true;
+            }
+        });
+        frame.add(repeat);
+
         try{
             bot=ImageIO.read(new File("robot/src/main/java/robot/robotH.png")); //robot picture file path
             field=ImageIO.read(new File("robot/src/main/java/robot/field.png")); //thx ally for making the field image
@@ -191,23 +192,94 @@ public class RobotSimulator extends Canvas {
         draw.start(); //start the painting thread
         ElapsedTime.startMoment=System.currentTimeMillis();
 
-        if(programs.size()>0){
-            try {
-                Class robotClass = (Class) programs.toArray()[programNum];
-                LinearOpMode lol = (LinearOpMode) robotClass.newInstance();
-                lol.runOpMode();
+        if(programs.size()>0) {
+            while(true){
 
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
+                try {
+                    System.out.println("num thread: " +Thread.activeCount());
+                    pause = true;
+                    robert.position.x = 0;
+                    robert.position.y = 0;
+                    robert.position.heading = Math.PI / 2;
+                    for (int i = 0; i < 4; i++) {
+                        robert.driveTrain[i].setPower(0);
+                        robert.driveTrain[i].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                        robert.driveTrain[i].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    }
+
+                    ElapsedTime.startMoment = System.currentTimeMillis();
+
+
+                    Class robotClass = (Class) programs.toArray()[programNum];
+                    LinearOpMode lol = (LinearOpMode) robotClass.newInstance();
+
+                    programRun runPro = new programRun(lol);
+                    runPro.start();
+
+                    while (!runPro.isInterrupted()) {
+                        if (end) {
+                            runPro.interrupt();
+                            lol.active = false;
+                            runPro.interrupt();
+                            break;
+                        }
+                    }
+                    try {
+                        Thread.sleep(50);
+                    }
+                    catch (InterruptedException e) {
+                    }
+                    lol.active=false;
+
+                    //System.out.println(lol.active);
+                    while (!end) {
+                        try {
+                            Thread.sleep(5);
+                        }
+                        catch (InterruptedException e) {
+                        }
+                    }
+
+                    runPro.interrupt();
+                    runPro.stop();
+                    //runPro.setPriority(10);
+                    //runPro.join();
+
+                    end = false;
+
+                    //runPro.finalize();
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
+
+
         //run whatever is in the auton runOpMode
         //auton lol= new auton();
         //lol.runOpMode();
-
-
     }
+    /*
+    public static void runProgram(LinearOpMode lol){
+        lol.active=true;
+
+        pause=true;
+        robert.position.x=0;
+        robert.position.y=0;
+        robert.position.heading=Math.PI/2;
+        for(int i=0; i<4; i++){
+            robert.driveTrain[i].setPower(0);
+            robert.driveTrain[i].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robert.driveTrain[i].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        ElapsedTime.startMoment=System.currentTimeMillis();
+
+
+        runProgram(lol);
+    }
+
+     */
     
     @Override
     public void update(Graphics g){paint(g);}

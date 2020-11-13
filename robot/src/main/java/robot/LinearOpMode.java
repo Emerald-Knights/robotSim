@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 public class LinearOpMode {
     //static ArrayList<Class> programs= new ArrayList<Class>();
     //public robot robert=RobotSimulator.robert;
-
+    boolean active=true;
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface Autonomous{
@@ -32,9 +32,9 @@ public class LinearOpMode {
         //lol this does nothing but makes program look like an actual auton
 
     }
-    public static boolean opModeIsActive(){
+    public boolean opModeIsActive(){
         //lol also does nothing
-        return true;
+        return active;
     }
 
 }
