@@ -37,6 +37,9 @@ public class DcMotor {
         if(pow>1.0){
             pow=1;
         }
+        else if(pow<-1.0){
+            pow=-1;
+        }
         power=pow;
         
     }
@@ -50,6 +53,10 @@ public class DcMotor {
         return power;
     }
     public double getCurrentPosition(){
+        try{
+            Thread.sleep(1);
+        }
+        catch(InterruptedException e){}
         return position;
     }
     public boolean isBusy(){

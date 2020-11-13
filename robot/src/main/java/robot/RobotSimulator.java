@@ -117,7 +117,10 @@ public class RobotSimulator extends Canvas {
         startFrame.setVisible(true); //make it visible
 
         while(!start){
-
+            try {
+                Thread.sleep(5);
+            }
+            catch(InterruptedException e){}
         }
         startFrame.dispose();
 
