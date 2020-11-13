@@ -2,11 +2,23 @@ package robot;
 
 //import com.studiohartman.jamepad.ControllerManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 
 public class LinearOpMode {
     //static ArrayList<Class> programs= new ArrayList<Class>();
+    //public robot robert=RobotSimulator.robert;
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Autonomous{
+        public String name() default "";
+        public String group() default "";
+    }
+
 
     public LinearOpMode(){
 

@@ -2,7 +2,9 @@ apply plugin: 'java-library'
 
 repositories {
     jcenter()
-    maven { url "https://jitpack.io" }
+    maven {
+        url "https://jitpack.io"
+    }
 
 }
 
@@ -10,6 +12,9 @@ dependencies {
     compile 'com.github.WilliamAHartman:Jamepad:1.4.0'
 
     compile "uk.co.electronstudio.sdl2gdx:sdl2gdx:1.0.4"
+
+    compile 'org.reflections:reflections:0.9.12'
+
 }
 
 sourceCompatibility = "1.7"

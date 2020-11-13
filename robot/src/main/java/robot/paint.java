@@ -26,8 +26,12 @@ public class paint implements Runnable{
         //controllers.addListener(new listener());
         ControllerState state;
         while(keepRun){
+
+
             //calls for image to be redrawn
             RobotSimulator.pic.repaint();
+
+
             //get current state of controller
             state= controller.getState(0);
 
@@ -74,7 +78,6 @@ public class paint implements Runnable{
             }
             catch(Exception e){}
 
-            
         }
     }
 }

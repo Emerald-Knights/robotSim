@@ -7,15 +7,18 @@ package robot;
 
 //import com.studiohartman.jamepad.ControllerManager;
 
+import org.reflections.Reflections;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+
+import javax.sound.sampled.Line;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.ElementType;
@@ -24,10 +27,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.imageio.ImageIO;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import static robot.utilities.*;
-import static robot.telemetry.*;
 
 /**
  *
@@ -35,7 +39,7 @@ import static robot.telemetry.*;
  */
 public class RobotSimulator extends Canvas {
 
-    static robot robert; //globally used robot
+    public static robot robert; //globally used robot
     static JFrame frame; //jframe that animation will take place in
     static Canvas pic; //canvas to draw on
     static Image bot; //global image of robot
@@ -43,33 +47,105 @@ public class RobotSimulator extends Canvas {
     static Image pauseSim;
     static boolean pause= true;
 
+    static Canvas startMenu;
+    static JFrame startFrame;
+    static boolean start=false;
+
     //48 pixesl per inch, field is 12x12ft
     static final int length=576; //size of frame 576
     static final int height =576;
     
     static List<String> tele=new ArrayList<>(); //list that includes all the string that telemetry wants to display
+
+    static JComboBox sus;
+    static JButton startButton;
+
     static JButton reset;
     static JButton stop;
 
     static inputs keys;
     static mouseInputs rice;
+    static programBox dropDown;
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public @interface Autonomous{
-        public String name() default "";
-        public String group() default "";
-    }
+    static int programNum=0;
+
 
 
     public static void main(String[] args) {
-        pic= new RobotSimulator(); //making the canvas
+        startFrame= new JFrame("EK 10582"); //making the frame
+        startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        startFrame.setBackground(new Color(142, 210, 153)); //make the background color olivia used on the logbook epic idea so its not "ugly"
+        startMenu= new Canvas();
+        startMenu.setBackground(new Color(142, 210, 153));
+
+        Reflections reflections = new Reflections("programs");
+        Set<Class<? extends LinearOpMode>> programs =reflections.getSubTypesOf(LinearOpMode.class);
+        String[] programNames= new String[programs.size()];
+
+        for(int i=0; i<programs.size(); i++){
+            programNames[i]= programs.toArray()[i].toString();
+        }
+
+        sus = new JComboBox(programNames);
+
+        dropDown= new programBox();
+        sus.addActionListener(dropDown);
+        sus.setBounds(100, 50, 200, 50);
+        sus.setFocusable(false);
+        startFrame.add(sus);
+
+        startButton= new JButton("S");
+        startButton.setFocusable(false);
+
+        startButton.setBounds(175, 250, 50, 30);
+        startButton.addActionListener( new ActionListener (){
+            public void actionPerformed(ActionEvent e){
+                start=true;
+            }
+        });
+        startFrame.add(startButton);
+
+        startMenu.setSize(400, 300);
+        startFrame.add(startMenu);
+
+        startFrame.pack();
+        startFrame.setResizable(false);
+
+
+        startFrame.setVisible(true); //make it visible
+
+        while(!start){
+
+        }
+        //System.out.println(programs.toArray()[programNum].getClass());
+        startFrame.dispose();
+
         frame= new JFrame("EK 10582"); //making the frame
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBackground(new Color(142, 210, 153)); //make the background color olivia used on the logbook epic idea so its not "ugly"
+
+
+        pic= new RobotSimulator(); //making the canvas
+
+
+        //Object[] progra= programs.toArray();
+/*
+        for(Object c: programs){
+            System.out.println(c.toString());
+        }
+
+ */
+
 
         reset = new JButton("R"); //new button made to reset robot position
         stop= new JButton("P");
         reset.setFocusable(false);
         stop.setFocusable(false);
+
+
+        robert=new robot(0,0,Math.PI/2); //new robot at 0, 0, facing 180 degrees from horizontal
+        robert.position.start(); //start the position thread
 
         paint t= new paint(); //making a new paint object, which will be made into a thread
         Thread draw= new Thread(t); //making t into a thread
@@ -106,29 +182,31 @@ public class RobotSimulator extends Canvas {
         catch(IOException e){
             System.out.println("oof");
         }
-        
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        robert=new robot(0,0,Math.PI/2); //new robot at 0, 0, facing 180 degrees from horizontal
-        robert.position.start(); //start the position thread
+
         pic.setSize(length, height); //canvas now is the size of the frame
-
-        frame.setBackground(new Color(142, 210, 153)); //make the background color olivia used on the logbook epic idea so its not "ugly"
         frame.add(pic); //make the frame have the canvas
-
         frame.pack();
-
         frame.setVisible(true); //make it visible
-        
+
         draw.start(); //start the painting thread
         ElapsedTime.startMoment=System.currentTimeMillis();
 
-        auton.class.getAnnotations();
+        if(programs.size()>0){
+            try {
+                Class robotClass = (Class) programs.toArray()[programNum];
+                LinearOpMode lol = (LinearOpMode) robotClass.newInstance();
+                lol.runOpMode();
 
-
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
         //run whatever is in the auton runOpMode
-        auton lol= new auton();
-        lol.runOpMode();
+        //auton lol= new auton();
+        //lol.runOpMode();
+
+
     }
     
     @Override

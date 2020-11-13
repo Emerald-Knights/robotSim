@@ -1,9 +1,9 @@
-package robot;
+package programs;
 
-import java.awt.event.KeyEvent;
-
-import static robot.utilities.getPowers;
-import robot.RobotSimulator.Autonomous;
+import robot.LinearOpMode;
+import robot.LinearOpMode.*;
+import robot.RobotSimulator;
+import robot.robot;
 
 @Autonomous(name = "auton", group ="f")
 public class auton extends LinearOpMode {
@@ -12,5 +12,4 @@ public class auton extends LinearOpMode {
     public void runOpMode(){
 
     }
-
 }
