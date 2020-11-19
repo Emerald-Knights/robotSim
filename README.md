@@ -55,7 +55,7 @@ All operations you want the robot to do must be called on RobotSimulator.robert.
 
 Motors have basic setPower(), getCurrentPosition(), and setMode() functionality and the simulator will move according to what power is set to its drive motors (there is no friction or whatever because that would take a lot of time and effort to make, so whatever power is set is proportional to how fast the robot moves).
 
-The imu can only grab the robot's angle using the first angle (does anyone seriously use the imu's getMagneticField function anyways?).
+The imu can only grab the robot's angle using the first angle (does anyone seriously use the imu's getMagneticField function anyways?). The inital angle is taken when the pause button is pressed for the first time, thus unpausing the program, and the angle is given in radians (because radians were better for coding how the simulator works and I was too lazy to convert them to degrees).
 
 gamepad1 is there, no gamepad2 because lazyness and I doubt you'd be using this with 2 gamepads. Call it like you usually would, like gamepad1.x;
 
