@@ -31,7 +31,6 @@ public class teleop extends OpMode{
         robert.leftBack.setPower(ly - lx + rx);
         robert.rightFront.setPower(ly - lx - rx);
         robert.rightBack.setPower(lx + ly - rx);
-        telemetry.addData("imu: " + robert.imu.getAngularOrientation().firstAngle);
-        telemetry.update();
+
     }
 }
