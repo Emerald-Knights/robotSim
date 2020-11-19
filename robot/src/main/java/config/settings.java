@@ -7,7 +7,8 @@ public class settings {
     public final static String fieldImage="robot/src/main/java/robot/field.png"; //if you hate the custom colored field image you can replace it here
     public final static Color fieldColor= new Color(142, 210, 153); //you can choose the color of the background too
 
-    public final static int frameLengthWidth=1200; // 576 different computers with different displays will need to adjust this number so the field is big enough
+    // different computers with different displays will need to adjust this number so the field is big enough
+    public final static int frameLengthWidth=576; //i found 576 works well at 1920x1080 and 1200 works well at 3000x2000
 
     //our robot goes at about 2700 encoders per second so im gonna assume everyone elses robot goes about that fast (if yours doesn't that's too bad lol)
     public final static double gearRatio=2/1; //how many times does the wheel rotate if the motor rotates once
