@@ -52,12 +52,12 @@ public class DcMotor {
     public double getPower(){
         return power;
     }
-    public double getCurrentPosition(){
+    public int getCurrentPosition(){
         try{
             Thread.sleep(1);
         }
         catch(InterruptedException e){}
-        return position;
+        return (int) Math.round(position);
     }
     public boolean isBusy(){
         return Math.abs(power)>0;

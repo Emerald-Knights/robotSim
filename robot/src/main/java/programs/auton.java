@@ -6,10 +6,10 @@ import robot.*;
 /** Use this as a model for all programs you want to write. Copy the imports down. The Autonomous
  *  annotation at the beginning does nothing, but it makes it seem like a real program lol. Also
  *  make sure any movement commands you wish to call get called on robert, as that is the only way
- *  they will register
+ *  they will register. Remember the opModeIsActives in your while loops
  */
 
-@Autonomous(name = "auton", group ="f")
+@Autonomous(name = "auton", group ="sus")
 public class auton extends LinearOpMode {
     robot robert= RobotSimulator.robert;
     @Override

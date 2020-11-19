@@ -28,7 +28,6 @@ public class robot {
         leftBack = new DcMotor();
         rightBack = new DcMotor();
         rightFront = new DcMotor();
-        imu = new BNO055IMU(position, heading);
 
         driveTrain[0] = leftFront;
         driveTrain[1] = leftBack;

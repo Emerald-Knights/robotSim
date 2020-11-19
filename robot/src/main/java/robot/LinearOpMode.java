@@ -1,6 +1,5 @@
 package robot;
 
-//import com.studiohartman.jamepad.ControllerManager;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,9 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
-public class LinearOpMode {
-    //static ArrayList<Class> programs= new ArrayList<Class>();
-    //public robot robert=RobotSimulator.robert;
+public abstract class LinearOpMode {
+
     boolean active=true;
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
@@ -19,21 +17,25 @@ public class LinearOpMode {
         public String group() default "";
     }
 
-
-    public LinearOpMode(){
-
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface  Teleop{
+        public String name() default"";
+        public String group() default"";
     }
 
-    //lol this entire thing does nothing just makes it look like a real opmode
-    public void runOpMode(){
+    public abstract void runOpMode();
 
-    }
+
     public void waitForStart(){
         //lol this does nothing but makes program look like an actual auton
 
     }
     public boolean opModeIsActive(){
-        //lol also does nothing
+        try{
+            Thread.sleep(1);
+        }
+        catch(InterruptedException e){}
         return active;
     }
 

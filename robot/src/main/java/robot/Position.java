@@ -5,7 +5,7 @@
  */
 package robot;
 import java.awt.Robot;
-
+import config.settings;
 import static robot.utilities.*;
 
 public class Position extends Thread{
@@ -46,26 +46,24 @@ public class Position extends Thread{
                         rob.driveTrain[i].setPower(0);
                     }
                 }
-
+                double pixelPerInch=settings.frameLengthWidth/144.0;
+                double maxChangePerLoop=27.0 /settings.encoderTickPerRev *settings.gearRatio *2*settings.wheelRadius*Math.PI;
                 //Here we want to find the direction the robot is traveling relative to itself, eg if it is driving forwards or strafing to the right
                 //robot system is analogous to right triangle, base is made up of leftfront and rightback which runs along x axis while height is leftback and rightfront that runs along y axis
                 //Using this model, the angle of the vector that is formed by adding the leftfront and rightback vector with the leftback and rightfront vector (perpendicular) can be calculated
                 //The angle of the vector is 45 degrees to the right of the direction the robot will end up travelling so we add 45 degrees to get the actual direction the robot will travel in
                 //Speed will be magnitude of above vector
                 double angleRobot = angleWrap(Math.PI / 4 + Math.atan2(rob.leftBack.getPower() + rob.rightFront.getPower(), rob.leftFront.getPower() + rob.rightBack.getPower())); //if y is backwards, negate
-                double powRobot = Math.hypot(rob.leftBack.getPower() + rob.rightFront.getPower(), rob.leftFront.getPower() + rob.rightBack.getPower())*.849;
+                double powRobot = Math.hypot(rob.leftBack.getPower() + rob.rightFront.getPower(), rob.leftFront.getPower() + rob.rightBack.getPower()) / (2*Math.sqrt(2)) *maxChangePerLoop; //.849
+
 
                 //we calculated the angle the robot was moving relative to where its facing, now need to calculate the angle the robot is moving relative to field and update its position accordingly
                 //The angle it is traveling in relative to the field is the direction it is traveling relative to the robot added to the angle the robot is facing relative to the field
                 double angleWorld = angleWrap(angleRobot + heading);
-                setX(getX() + Math.cos(angleWorld) * powRobot );
-                setY(getY() - Math.sin(angleWorld) * powRobot );
-                //x+=Math.cos(angleWorld)*powRobot;
-                //y-=Math.sin(angleWorld)*powRobot;
-                setHeading(angleWrap(getHeading() + (rob.rightBack.getPower() + rob.rightFront.getPower() - rob.leftBack.getPower() - rob.leftFront.getPower()) *.06/4));
+                setX(getX() + Math.cos(angleWorld) * powRobot *pixelPerInch);
+                setY(getY() - Math.sin(angleWorld) * powRobot *pixelPerInch);
 
-
-                //heading=angleWrap(heading+(rob.rightBack.getPower() + rob.rightFront.getPower()-rob.leftBack.getPower() -rob.leftFront.getPower())/50);
+                setHeading(angleWrap(getHeading() + (rob.rightBack.getPower() + rob.rightFront.getPower() - rob.leftBack.getPower() - rob.leftFront.getPower())/4.0 *maxChangePerLoop/settings.robotRadius ));
             }
             try{
                 Thread.sleep(10);
