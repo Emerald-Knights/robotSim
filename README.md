@@ -1,5 +1,11 @@
 A very simple mecanum drive simulator for FTC teams by Team 10582, Emerald Knights
 
+Use this to test out drive paths and what not.
+
+IMPORTANT: DO NOT RUN THE APP, THAT IS JUST THERE SO IT WORKS WELL WITH ANDROID STUDIO AND WE CAN USE ANDROID VIEW (project view looks ugly and you know it)
+
+This is probably the biggest pile of spaghetti code you've ever seen but it works at least partially and that's good enough for me
+
 **Setup**
 ---
 To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. Within the robot folder, find the RobotSimulator class.
@@ -18,9 +24,46 @@ The other class of importance is the auton class, where all of your auton/ teleo
 
 ![auton](/pics/auton.png)
 
+DO NOT RUN THE APP CAUSE IT LITERALLY DOES NOTHING
+
+**Configuring**
+---
+Inside the config folder, there should be a java class called settings. Use this to input a few details about your robot (or you can just use the settings from our robot). You can also change the appearance of the simulator if you just despise EK green for whatever reason
+![settings](/pics/settings.png)
+
+**How to use**
+---
+After pressing the run button, a green popup should appear. You can use the dropdown box to select which program you want to run. All of your programs need to extend LinearOpMode or OpMode in order to show up. When you choose one you wish to run, press the S button (s stands for start but there wasn't enough room to put the entire word).
+![start](/pics/startScreen.png)
+
 **Features**
 ---
-The simulator only supports mecanum drives and a single LinearOpMode as of right now. Gamepad inputs will be read through the gamepad1 class, and keyboard inputs with keyboard1 (no, the FTC SDK does not support keyboards but I added it to help with testing for those without a gamepad). Telemetry will be displayed in the bottom left. Telemetry works a bit differently in which telemetry will display strings. Remember telemetry.update() or else the program will run out of ram. The R button at the top left will reset the position of the robot, and the P button will pause the simulation, preventing any change in robot movement or telemetry. The robot can also be moved around by clicking and dragging it, and rotation happens with a right click and hold.
+The simulator only supports mecanum drives (because mecanum is obviously superior and also I'm lazy). Gamepad inputs will be read through the gamepad1 class, and keyboard inputs with keyboard1 (no, the FTC SDK does not support keyboards but I added it to help with testing for people without a gamepad). Telemetry will be displayed in the bottom left. Telemetry works a bit differently in which telemetry will display strings. Remember telemetry.update() or else the program will run out of ram and die. 
+
+If your robot runs off screen but you still want the program to continue running (like if your doing a teleop and you drive the robot off screeen), you can press the R button to reset its position and angle. (R stands for reset)
+
+If your program failed and you want to run it again to try seeing what went wrong, you can press the F button to reset the robot AND reset the auton or teleop so it is ready to be run again. (F stands for F in the chat because your program failed)
+
+Finally, to pause the simulation at a given moment to check out telemetry or adjust the robot's position or something, press the P button and a grey pause icon will show up in the top right, showing that you are paused. (P stands for pause)
+![button](/pics/buttons.png)
+
+The robot can also be dragged to different parts of the screen, so you can move it to wherever you wish to start the program. Left clicking and dragging changes its position, and right clicking will change its angle.
+
+**Methods**
+---
+All operations you want the robot to do must be called on RobotSimulator.robert. In the sample programs you can see how to do that. Since the robot is not actually a real robot, you don't need to have an actual init phase. I've only included methods that I actually use, so there is stuff missing that would be in the actual FTC SDK. For example, on an Orientation object you can call first, second, and third angle, but I've only included first because that is the one my team uses. 
+
+Motors have basic setPower(), getCurrentPosition(), and setMode() functionality and the simulator will move according to what power is set to its drive motors (there is no friction or whatever because that would take a lot of time and effort to make, so whatever power is set is proportional to how fast the robot moves).
+
+The imu can only grab the robot's angle using the first angle (does anyone seriously use the imu's getMagneticField function anyways?).
+
+gamepad1 is there, no gamepad2 because lazyness and I doubt you'd be using this with 2 gamepads. Call it like you usually would, like gamepad1.x;
+
+I added a keyboard1 too because some people probably don't have a controller to use all the time. At the moment it only has WASDQE because I was too lazy to put in the other keys.
+
+Telemetry is here, you just need to call telemetry.addData() and input a String. Yes, the parameters are different from what telemetry normally accepts, but it's annoying doing it the way telemetry normally does. Make sure to call telemetry.update() or else bad stuff happens. The telemetry appears at the bottom left corner. Also, sadly, I was not able to add in telemetry.speak().
+
+You can add waitForStart() before a program and have opModeIsReady() in your while loops for practice, it is not required in the simulator but I would recommend you have those there to develop good habbits.
 
 
 **How it works**
