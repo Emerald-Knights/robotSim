@@ -240,6 +240,15 @@ public class RobotSimulator extends Canvas {
 
                     //make a new thread that will run the auton
                     programRun runPro = new programRun(lol);
+
+                    while(pause){
+                        try {
+                            Thread.sleep(1);
+                        }
+                        catch (InterruptedException e) {
+                        }
+                    }
+
                     runPro.start();
 
                     //wait for the thread to finish
@@ -305,6 +314,7 @@ public class RobotSimulator extends Canvas {
             String message=telem.get(i);
             if(message!=null){
                 bufferG.drawString(message, 0, getHeight()-telem.size()*10+(i*10+10));
+
             }
         }
 
