@@ -14,7 +14,7 @@ public class teleop extends OpMode{
     robot robert=RobotSimulator.robert;
     @Override
     public void init() {
-
+        robert.init(); //does nothing but can help simulate an actual program
     }
     @Override
     public void start() {

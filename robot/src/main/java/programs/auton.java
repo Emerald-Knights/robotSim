@@ -14,6 +14,8 @@ public class auton extends LinearOpMode {
     robot robert= RobotSimulator.robert;
     @Override
     public void runOpMode(){
+        robert.init(); //does nothing but can help simulate an actual program
+        waitForStart();
         while(robert.leftBack.getCurrentPosition()<1000 && opModeIsActive()){
             for(int i=0; i<4; i++){
                 robert.driveTrain[i].setPower(.8);

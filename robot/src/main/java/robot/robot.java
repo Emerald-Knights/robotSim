@@ -34,4 +34,7 @@ public class robot {
         driveTrain[2] = rightBack;
         driveTrain[3] = rightFront;
     }
+    public void init(){
+        //this method does nothing but might help simulate your actual programs
+    }
 }
