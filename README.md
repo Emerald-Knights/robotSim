@@ -2,13 +2,18 @@ A very simple mecanum drive simulator for FTC teams by Team 10582, Emerald Knigh
 
 Use this to test out drive paths and what not.
 
-IMPORTANT: DO NOT RUN THE APP, THAT IS JUST THERE SO IT WORKS WELL WITH ANDROID STUDIO AND WE CAN USE ANDROID VIEW (project view looks ugly and you know it)
+IMPORTANT: DO NOT RUN THE APP, PRETEND THAT THE ENTIRE FOLDER DOESN'T EXIST, THAT IS JUST THERE SO IT WORKS WELL WITH ANDROID STUDIO AND WE CAN USE ANDROID VIEW (project view looks ugly and you know it).
 
 This is probably the biggest pile of spaghetti code you've ever seen but it works at least partially and that's good enough for me
 
 **Setup**
 ---
-To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. Within the robot folder, find the RobotSimulator class.
+To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. 
+
+
+![folder](/pics/folder.png)
+
+Within the robot folder, find the RobotSimulator class.
 
 ![class](/pics/RobotSimulator.png)
 
@@ -29,12 +34,18 @@ DO NOT RUN THE APP CAUSE IT LITERALLY DOES NOTHING
 **Configuring**
 ---
 Inside the config folder, there should be a java class called settings. Use this to input a few details about your robot (or you can just use the settings from our robot). You can also change the appearance of the simulator if you just despise EK green for whatever reason
+
 ![settings](/pics/settings.png)
 
 **How to use**
 ---
 After pressing the run button, a green popup should appear. You can use the dropdown box to select which program you want to run. All of your programs need to extend LinearOpMode or OpMode in order to show up. When you choose one you wish to run, press the S button (s stands for start but there wasn't enough room to put the entire word).
+
 ![start](/pics/startScreen.png)
+
+After pressing start, the program should run and look like this
+
+![running](/pics/programRunning.png)
 
 **Features**
 ---
@@ -45,6 +56,7 @@ If your robot runs off screen but you still want the program to continue running
 If your program failed and you want to run it again to try seeing what went wrong, you can press the F button to reset the robot AND reset the auton or teleop so it is ready to be run again. (F stands for F in the chat because your program failed)
 
 Finally, to pause the simulation at a given moment to check out telemetry or adjust the robot's position or something, press the P button and a grey pause icon will show up in the top right, showing that you are paused. (P stands for pause)
+
 ![button](/pics/buttons.png)
 
 The robot can also be dragged to different parts of the screen, so you can move it to wherever you wish to start the program. Left clicking and dragging changes its position, and right clicking will change its angle.
