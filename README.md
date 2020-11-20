@@ -2,13 +2,17 @@ A very simple mecanum drive simulator for FTC teams by Team 10582, Emerald Knigh
 
 Use this to test out drive paths and what not.
 
-IMPORTANT: DO NOT RUN THE APP, THAT IS JUST THERE SO IT WORKS WELL WITH ANDROID STUDIO AND WE CAN USE ANDROID VIEW (project view looks ugly and you know it)
+IMPORTANT: DO NOT RUN THE APP, PRETEND THAT THE ENTIRE FOLDER DOESN'T EXIST, THAT IS JUST THERE SO IT WORKS WELL WITH ANDROID STUDIO AND WE CAN USE ANDROID VIEW (project view looks ugly and you know it).
 
 This is probably the biggest pile of spaghetti code you've ever seen but it works at least partially and that's good enough for me
 
 **Setup**
 ---
-To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. Within the robot folder, find the RobotSimulator class.
+To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. 
+
+![folders](/pics/folders.png)
+
+Within the robot folder, find the RobotSimulator class.
 
 ![class](/pics/RobotSimulator.png)
 
@@ -37,6 +41,10 @@ Inside the config folder, there should be a java class called settings. Use this
 After pressing the run button, a green popup should appear. You can use the dropdown box to select which program you want to run. All of your programs need to extend LinearOpMode or OpMode in order to show up. When you choose one you wish to run, press the S button (s stands for start but there wasn't enough room to put the entire word).
 
 ![start](/pics/startScreen.png)
+
+After pressing start, the program should run and look like this
+
+![running](/pics/programRunning.png)
 
 **Features**
 ---
