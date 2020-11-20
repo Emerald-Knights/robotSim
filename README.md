@@ -10,7 +10,8 @@ This is probably the biggest pile of spaghetti code you've ever seen but it work
 ---
 To set up, first download the zip and extract it somewhere you will remember (like documents). Then, open the extraced folder in Android Studio as an existing project. When the gradle finishes syncing, there should be 3 folders in Android view: app, robot, and Gradle Scripts. app can be ignored, as it is only to make this project work better with Android Studio. 
 
-![folders](/pics/folders.png)
+
+![folder](/pics/folders.png)
 
 Within the robot folder, find the RobotSimulator class.
 
