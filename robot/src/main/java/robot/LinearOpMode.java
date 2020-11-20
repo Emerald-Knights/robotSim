@@ -31,6 +31,14 @@ public abstract class LinearOpMode {
         //lol this does nothing but makes program look like an actual auton
 
     }
+
+    public void sleep(int milliseconds){
+        try{
+            Thread.sleep(milliseconds);
+        }
+        catch(InterruptedException e){}
+    }
+
     public boolean opModeIsActive(){
         try{
             Thread.sleep(1);
