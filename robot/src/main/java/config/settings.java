@@ -15,4 +15,5 @@ public class settings {
     public final static int encoderTickPerRev=1120; //search up how many encoder ticks = 1 revolution for your motor, neverrest 40s have 1120 per revolution
     public final static int wheelRadius=2; //radius of your wheel in inches
     public final static double robotRadius=9.5; //inches, approx distance from the center of the robot to the wheels, honestly just to approximate how fast your robot turns, doesn't matter too much
+    public final static double maxVelocity=60; //inches per second
 }

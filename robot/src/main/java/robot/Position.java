@@ -19,6 +19,9 @@ public class Position extends Thread{
     final double horizEncoderToInch=1; //will need to tune
     boolean keepRun=true;
     robot rob;
+    double pixelPerInch;
+    double maxChangePerLoop;
+    double encoderPerSec;
 
     //use inches for x and y positions
     //sets up the initial position of the robot
@@ -27,6 +30,11 @@ public class Position extends Thread{
         this.y=y;
         this.heading=heading;
         this.rob=rob;
+
+        double circumference=2*Math.PI*settings.wheelRadius;
+        encoderPerSec=settings.maxVelocity/ circumference /settings.gearRatio *settings.encoderTickPerRev;
+        pixelPerInch=settings.frameLengthWidth/144.0;
+        maxChangePerLoop=encoderPerSec/100.0 /settings.encoderTickPerRev *settings.gearRatio *circumference;
     }
 
     @Override
@@ -37,7 +45,7 @@ public class Position extends Thread{
                 //Cycles through all motors, seeing what mode they are in and thus whether or not to increment encoder position
                 for (int i = 0; i < rob.driveTrain.length; i++) {
                     if (rob.driveTrain[i].getMode() ==DcMotor.RunMode.RUN_USING_ENCODER || rob.driveTrain[i].getMode() ==DcMotor.RunMode.RUN_TO_POSITION) {
-                        rob.driveTrain[i].position += rob.driveTrain[i].getPower() *27;
+                        rob.driveTrain[i].position += rob.driveTrain[i].getPower() *encoderPerSec/100;
                     } else if (rob.driveTrain[i].getMode() ==DcMotor.RunMode.STOP_AND_RESET_ENCODER) {
                         rob.driveTrain[i].setPower(0);
                         rob.driveTrain[i].position = 0;
@@ -46,8 +54,7 @@ public class Position extends Thread{
                         rob.driveTrain[i].setPower(0);
                     }
                 }
-                double pixelPerInch=settings.frameLengthWidth/144.0;
-                double maxChangePerLoop=27.0 /settings.encoderTickPerRev *settings.gearRatio *2*settings.wheelRadius*Math.PI;
+
                 //Here we want to find the direction the robot is traveling relative to itself, eg if it is driving forwards or strafing to the right
                 //robot system is analogous to right triangle, base is made up of leftfront and rightback which runs along x axis while height is leftback and rightfront that runs along y axis
                 //Using this model, the angle of the vector that is formed by adding the leftfront and rightback vector with the leftback and rightfront vector (perpendicular) can be calculated
