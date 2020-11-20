@@ -6,7 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 public abstract class LinearOpMode {
 
     boolean active=true;
@@ -33,10 +32,16 @@ public abstract class LinearOpMode {
     }
 
     public void sleep(int milliseconds){
-        try{
-            Thread.sleep(milliseconds);
+        int time=0;
+        while(time<milliseconds){
+            if(!RobotSimulator.pause){
+                try{
+                    Thread.sleep(1);
+                }
+                catch(InterruptedException e){}
+                time++;
+            }
         }
-        catch(InterruptedException e){}
     }
 
     public boolean opModeIsActive(){
