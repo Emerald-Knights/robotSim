@@ -61,6 +61,16 @@ Finally, to pause the simulation at a given moment to check out telemetry or adj
 
 The robot can also be dragged to different parts of the screen, so you can move it to wherever you wish to start the program. Left clicking and dragging changes its position, and right clicking will change its angle.
 
+**Odo**
+---
+To simulate odo, you can call the getX(), getY(), and getHeading() method on robot (do not call it on robert.position) to get your position on XY coordinate field (X and Y will return the way Vuforia does it, in inches). 
+
+You can also set robert.lookahead and robert.path to equal a lookahead distance and an arrayList of path points and the simulator will draw it on the field
+
+![odo](/pics/odo.png)
+
+![odoDrive](/pics/odoDrive.png)
+
 **Methods**
 ---
 All operations you want the robot to do must be called on RobotSimulator.robert. In the sample programs you can see how to do that. Since the robot is not actually a real robot, you don't need to have an actual init phase. I've only included methods that I actually use, so there is stuff missing that would be in the actual FTC SDK. For example, on an Orientation object you can call first, second, and third angle, but I've only included first because that is the one my team uses. 
