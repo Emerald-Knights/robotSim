@@ -22,6 +22,7 @@ public class Position extends Thread{
     double pixelPerInch;
     double maxChangePerLoop;
     double encoderPerSec;
+    double robotRadius;
 
     //use inches for x and y positions
     //sets up the initial position of the robot
@@ -35,6 +36,8 @@ public class Position extends Thread{
         encoderPerSec=settings.maxVelocity/ circumference /settings.gearRatio *settings.encoderTickPerRev;
         pixelPerInch=settings.frameLengthWidth/144.0;
         maxChangePerLoop=encoderPerSec/100.0 /settings.encoderTickPerRev *settings.gearRatio *circumference;
+
+        robotRadius= Math.sqrt(Math.pow(settings.robotLength,2)/4 + Math.pow(settings.robotWidth,2)/4);
     }
 
     @Override
@@ -67,10 +70,12 @@ public class Position extends Thread{
                 //we calculated the angle the robot was moving relative to where its facing, now need to calculate the angle the robot is moving relative to field and update its position accordingly
                 //The angle it is traveling in relative to the field is the direction it is traveling relative to the robot added to the angle the robot is facing relative to the field
                 double angleWorld = angleWrap(angleRobot + heading);
-                setX(getX() + Math.cos(angleWorld) * powRobot *pixelPerInch);
-                setY(getY() - Math.sin(angleWorld) * powRobot *pixelPerInch);
-
-                setHeading(angleWrap(getHeading() + (rob.rightBack.getPower() + rob.rightFront.getPower() - rob.leftBack.getPower() - rob.leftFront.getPower())/4.0 *maxChangePerLoop/settings.robotRadius ));
+                x+=Math.cos(angleWorld) * powRobot *pixelPerInch;
+                y-=Math.sin(angleWorld) * powRobot *pixelPerInch;
+                //setX(getX() + Math.cos(angleWorld) * powRobot *pixelPerInch);
+                //setY(getY() - Math.sin(angleWorld) * powRobot *pixelPerInch);
+                heading=angleWrap(heading+ (rob.rightBack.getPower() + rob.rightFront.getPower() - rob.leftBack.getPower() - rob.leftFront.getPower())/4.0 *maxChangePerLoop/robotRadius );
+                //setHeading(angleWrap(getHeading() + (rob.rightBack.getPower() + rob.rightFront.getPower() - rob.leftBack.getPower() - rob.leftFront.getPower())/4.0 *maxChangePerLoop/settings.robotRadius ));
             }
             try{
                 Thread.sleep(10);
@@ -79,7 +84,7 @@ public class Position extends Thread{
         }
         
     }
-
+/*
     public void setX(double x) {
         if(!RobotSimulator.pause){
             this.x = x;
@@ -92,16 +97,18 @@ public class Position extends Thread{
         }
     }
 
+ */
+
     public void setHeading(double heading) {
         if(!RobotSimulator.pause){
             this.heading = heading;
         }
     }
 
+
     public double getX() {
         return x;
     }
-
     public double getY() {
         return y;
     }
@@ -110,6 +117,9 @@ public class Position extends Thread{
         return heading;
     }
 
+
+
+    /*
     public Point getPos(){
         return new Point(this.x, this.y);
     }
@@ -118,4 +128,6 @@ public class Position extends Thread{
         this.y=y;
         this.heading=heading;
     }
+
+     */
 }

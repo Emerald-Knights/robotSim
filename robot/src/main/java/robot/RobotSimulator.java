@@ -7,6 +7,7 @@ package robot;
 
 import org.reflections.Reflections;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
@@ -75,6 +76,7 @@ public class RobotSimulator extends Canvas {
     static Color background=settings.fieldColor;
 
     static Font writting =new Font("Roboto", Font.PLAIN, settings.frameLengthWidth/50);
+    static Font telemetryFont= new Font("Roboto", Font.PLAIN, settings.frameLengthWidth/40);
 
     public static void main(String[] args) {
         startFrame= new JFrame("EK 10582"); //making a small frame for program selection
@@ -103,7 +105,7 @@ public class RobotSimulator extends Canvas {
         //do the other stuff to set up a box
         dropDown= new programBox();
         sus.addActionListener(dropDown);
-        sus.setBounds(sL/4, sL/5, sL/2, sW/5);
+        sus.setBounds(sL/4, sL/5, sL/2, sW/6);
         sus.setFocusable(false);
         sus.setFont(writting);
         startFrame.add(sus);
@@ -151,7 +153,7 @@ public class RobotSimulator extends Canvas {
         stop.setFocusable(false);
         repeat.setFocusable(false);
 
-        robert=new robot(0,0,Math.PI/2); //new robot at 0, 0, facing 180 degrees from horizontal
+        robert=new robot(0,0,0); //new robot at 0, 0, facing 180 degrees from horizontal
         robert.position.start(); //start the position thread
 
         paint t= new paint(); //making a new paint object, which will be made into a thread
@@ -201,7 +203,7 @@ public class RobotSimulator extends Canvas {
         //get the pictures for a bunch of stuff
         try{
             bot=ImageIO.read(new File(settings.botImage)); //robot picture file path
-            field=ImageIO.read(new File(settings.fieldImage)); //thx Ally 16953-FIREfor making the field image
+            field=ImageIO.read(new File(settings.fieldImage)); //thx Ally 16953-FIRE for making the field image
             pauseSim=ImageIO.read(new File("robot/src/main/java/robot/pause.png")); //THERE OLIVIA DOES THAT MAKE U HAPPY
         }
         catch(IOException e){
@@ -223,7 +225,7 @@ public class RobotSimulator extends Canvas {
                     pause = true;
                     robert.position.x = 0;
                     robert.position.y = 0;
-                    robert.position.heading = Math.PI / 2;
+                    robert.position.heading = 0;
                     for (int i = 0; i < 4; i++) {
                         robert.driveTrain[i].setPower(0);
                         robert.driveTrain[i].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -295,15 +297,17 @@ public class RobotSimulator extends Canvas {
     public void update(Graphics g){paint(g);}
     @Override
     public void paint(Graphics g){
-        //robot will be 1/36 the size of the frame
-        int robotLen=length/6;
-        int robotWid=height/6;
+
+        int robotLen=(int)Math.round(settings.robotLength*robert.position.pixelPerInch);
+        int robotWid=(int)Math.round(settings.robotWidth*robert.position.pixelPerInch);
 
         //make a second frame that we will edit while current frame being displayed
         Image buffer= frame.createImage(frame.getWidth(), frame.getHeight());
         Graphics2D bufferG=(Graphics2D) buffer.getGraphics();
 
-        bufferG.setFont(writting);
+        bufferG.setFont(telemetryFont);
+        bufferG.setColor(settings.lineColor);
+
         bufferG.drawImage(field, getWidth()/2-length/2, getHeight()/2-height/2, length, height, this);
 
         //draw everything in the telemetry
@@ -313,10 +317,23 @@ public class RobotSimulator extends Canvas {
         for(int i=0; i<telem.size(); i++){
             String message=telem.get(i);
             if(message!=null){
-                bufferG.drawString(message, 0, getHeight()-telem.size()*10+(i*10+10));
+                bufferG.drawString(message, 0, getHeight()-telem.size()*length/40+(i*length/40+length/40)-length/50);
 
             }
         }
+
+        bufferG.setStroke(new BasicStroke(length/200));
+        if(robert.path!= null && robert.path.size()>0){
+            for(int i=0; i<robert.path.size()-1; i++){
+                bufferG.drawLine((int)(-robert.path.get(i).y*robert.position.pixelPerInch+getWidth()/2), (int)(-robert.path.get(i).x*robert.position.pixelPerInch+getHeight()/2), (int)(-robert.path.get(i+1).y*robert.position.pixelPerInch+getWidth()/2), (int)(-robert.path.get(i+1).x*robert.position.pixelPerInch+getHeight()/2));
+            }
+            for(int i=0; i<robert.path.size(); i++){
+                bufferG.fillOval((int)(-robert.path.get(i).y*robert.position.pixelPerInch+getWidth()/2-length/100), (int)(-robert.path.get(i).x*robert.position.pixelPerInch+getHeight()/2-height/100), length/50, height/50);
+            }
+        }
+
+        bufferG.drawOval((int)(robert.position.getX()-robert.lookahead*robert.position.pixelPerInch+getWidth()/2), (int) (robert.position.getY()-robert.lookahead-robert.lookahead*robert.position.pixelPerInch+getHeight()/2), (int)(2*robert.lookahead*robert.position.pixelPerInch), (int)(2*robert.lookahead*robert.position.pixelPerInch));
+
 
         //rotate based on robot rotation and draw it
         bufferG.rotate(-robert.position.heading, robert.position.x +getWidth()/2, robert.position.y +getHeight()/2);
