@@ -1,3 +1,2 @@
 include ':robot'
-include ':app'
 rootProject.name = "RoboSim"
