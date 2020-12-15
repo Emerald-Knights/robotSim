@@ -13,7 +13,7 @@ public class settings {
 
     //these are all estimates so u don't need to be too accurate
     public final static double gearRatio=2/1; //how many times does the wheel rotate if the motor rotates once
-    public final static int encoderTickPerRev=1120; //search up how many encoder ticks = 1 revolution for your motor, neverrest 40s have 1120 per revolution
+    public final static int encoderTickPerRev=576; //search up how many encoder ticks = 1 revolution for your motor, neverrest 40s have 1120 per revolution
     public final static int wheelRadius=2; //radius of your wheel in inches
     public final static double robotLength=18; //inches
     public final static double robotWidth=18;
