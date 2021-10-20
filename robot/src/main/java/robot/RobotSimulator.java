@@ -203,7 +203,7 @@ public class RobotSimulator extends Canvas {
         try{
             bot=ImageIO.read(new File(settings.botImage)); //robot picture file path
             field=ImageIO.read(new File(settings.fieldImage)); //thx Ally 16953-FIRE for making the field image
-            pauseSim=ImageIO.read(new File("robot/src/main/java/robot/pause.png")); //THERE OLIVIA DOES THAT MAKE U HAPPY
+            pauseSim=ImageIO.read(new File(settings.pauseImage)); //THERE OLIVIA DOES THAT MAKE U HAPPY
         }
         catch(IOException e){
             System.out.println("oof");
