@@ -13,7 +13,7 @@ import robot.*;
  */
 
 @Autonomous(name = "auton", group ="sus")
-public class auton extends LinearOpMode {
+public class Auton extends LinearOpMode {
     robot robert= RobotSimulator.robert;
     @Override
     public void runOpMode(){

@@ -9,8 +9,8 @@ import robot.*;
  * make sure any movement commands you wish to call get called on robert, as that is the only way
  * they will register
  */
-@Teleop(name="teleop", group="sus")
-public class teleop extends OpMode{
+@robot.LinearOpMode.Teleop(name="teleop", group="sus")
+public class Teleop extends OpMode{
     robot robert=RobotSimulator.robert;
     @Override
     public void init() {
