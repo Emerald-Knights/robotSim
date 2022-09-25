@@ -34,7 +34,7 @@ public class GlobalTranslationalTeleop extends OpMode{
 
         double ratio;
         double max = Math.max(Math.abs(rf), Math.abs(lf));
-        double magnitude = Math.sqrt((lx * lx) + (ly * ly) + (rx * rx));
+        double magnitude = Math.sqrt((lx * lx) + (ly * ly));
         if (max == 0) {
             ratio = 0;
         }
