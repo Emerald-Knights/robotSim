@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class settings {
     public final static String botImage="robot/src/main/java/assets/robotH.png"; //if you have a picture of your own robot put it here
-    public final static String fieldImage="robot/src/main/java/assets/fields/field20-21.png"; //you can change the field image here. field1.png is a custom colored one lol
+    public final static String fieldImage="robot/src/main/java/assets/fields/field22-23.png"; //you can change the field image here. field1.png is a custom colored one lol
     public final static String pauseImage="robot/src/main/java/assets/pause.png";
     public final static Color fieldColor= new Color(211, 211, 211); //you can choose the color of the background too. (142, 210, 153) goes well with the custom colored field
     public final static Color lineColor= new Color(0, 0,0 ); //color of lines if you doing pure pursuit stuff
