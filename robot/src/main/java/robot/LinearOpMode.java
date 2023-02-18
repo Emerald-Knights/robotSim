@@ -8,19 +8,19 @@ import java.lang.annotation.Target;
 
 public abstract class LinearOpMode {
 
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface Teleop{
+        public String name() default "";
+        public String group() default "";
+    }
+
     boolean active=true;
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface Autonomous{
         public String name() default "";
         public String group() default "";
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.TYPE)
-    public @interface  Teleop{
-        public String name() default"";
-        public String group() default"";
     }
 
     public abstract void runOpMode();

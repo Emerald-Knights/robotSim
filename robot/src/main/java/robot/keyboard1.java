@@ -1,10 +1,10 @@
 package robot;
 
 public class keyboard1 {
-    static boolean w=false;
-    static boolean a=false;
-    static boolean s=false;
-    static boolean d=false;
-    static boolean q=false;
-    static boolean e=false;
+    public static boolean w=false;
+    public static boolean a=false;
+    public static boolean s=false;
+    public static boolean d=false;
+    public static boolean q=false;
+    public static boolean e=false;
 }

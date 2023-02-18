@@ -3,48 +3,43 @@ package programs;
 import robot.LinearOpMode.*;
 import robot.*;
 
-/** Very very basic example drive
- * A sample OpMode with how to use gamepad inputs. The Teleop
- * annotation at the beginning does nothing, but it makes it seem like a real program lol. Also
- * make sure any movement commands you wish to call get called on robert, as that is the only way
- * they will register
- */
-@robot.LinearOpMode.Teleop(name="teleop", group="sus")
+@LinearOpMode.Teleop(name="teleop", group="sus")
 public class GlobalTranslationalTeleop extends OpMode{
-    robot robert=RobotSimulator.robert;
+    robot wucru = RobotSimulator.robert;
+
     @Override
     public void init() {
-        robert.init(); //does nothing but can help simulate an actual program
+        wucru.init();
     }
+
     @Override
     public void start() {
-
+        //smile emoji
     }
 
     @Override
     public void loop() {
-        double lx=gamepad1.left_stick_x;
-        double ly=-gamepad1.left_stick_y;
-        double rx=gamepad1.right_stick_x;
+        double lx = (keyboard1.d ? 1 : 0) + (keyboard1.a ? -1 : 0) ;
+        double ly = (keyboard1.w ? 1 : 0) + (keyboard1.s ? -1 : 0) ;
+        double rx = (keyboard1.e ? 1 : 0) + (keyboard1.q ? -1 : 0) ;
+        double currentAngle = wucru.getHeading();
+        System.out.println("currentangle" + wucru.getHeading());
 
-        double direction = Math.atan2(-ly, lx);
-        double lf = Math.sin(robert.getHeading() + Math.PI*3/4 + direction);
-        double rf = Math.sin(robert.getHeading() + Math.PI*5/4 + direction);
-        double turnPower = rx;
+        double maxInput = Math.max(Math.abs(lx), Math.abs(ly));
+        double direction = Math.atan2(-ly, lx); //set direction
+        double lf = Math.sin(currentAngle + Math.PI*3/4 + direction) * maxInput;
+        double rf = Math.sin(currentAngle + Math.PI*5/4 + direction) * maxInput;
+        double turnPower = -rx; //turn power can be changed to a magnitude and direction
+        double maxTrans = Math.max(Math.abs(rf), Math.abs(lf));
+        double denominator = Math.abs(turnPower) + maxTrans;
+        double transRatio = maxTrans / (denominator == 0 ? 1 : denominator);
+        double rotRatio = Math.abs(turnPower) / (denominator == 0 ? 1 : denominator);
 
-        double ratio;
-        double max = Math.max(Math.abs(rf), Math.abs(lf));
-        double magnitude = Math.sqrt((lx * lx) + (ly * ly));
-        if (max == 0) {
-            ratio = 0;
-        }
-        else {
-            ratio = magnitude / max ;
-        }
+        wucru.leftFront.setPower(0.8 * ((transRatio * lf) + (turnPower * rotRatio)));
+        wucru.leftBack.setPower(0.8 * ((transRatio * rf) + (turnPower * rotRatio)));
+        wucru.rightFront.setPower(0.8 * ((transRatio * rf) - (turnPower * rotRatio)));
+        wucru.rightBack.setPower(0.8 * ((transRatio * lf) - (turnPower * rotRatio)));
 
-        robert.leftFront.setPower(lf*ratio + turnPower);
-        robert.leftBack.setPower(rf*ratio + turnPower);
-        robert.rightFront.setPower(rf*ratio - turnPower);
-        robert.rightBack.setPower(lf*ratio - turnPower);
+        System.out.println("pos (" + wucru.getX() + ", " + wucru.getY() + ") angle: " + wucru.getHeading());
     }
 }
